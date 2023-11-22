@@ -295,17 +295,17 @@ void saveToFileV(const std::vector<Studentas>& studentasList, const std::string&
 
     if (choice1 == "vardus") {
         sort(sortedStudents.begin(), sortedStudents.end(), [](const Studentas& a, const Studentas& b) {
-            return a.getVardas() < b.getVardas(); // Using getter
+            return a.getVardas() < b.getVardas();
             });
     }
     else if (choice1 == "pavardes") {
         sort(sortedStudents.begin(), sortedStudents.end(), [](const Studentas& a, const Studentas& b) {
-            return a.getPavarde() < b.getPavarde(); // Using getter
+            return a.getPavarde() < b.getPavarde(); 
             });
     }
     else if (choice1 == "vidurkius") {
         sort(sortedStudents.begin(), sortedStudents.end(), [](const Studentas& a, const Studentas& b) {
-            return a.getVidurkis() < b.getVidurkis(); // Using getter
+            return a.getVidurkis() < b.getVidurkis();
             });
     }
 
@@ -324,7 +324,7 @@ void saveToFileV(const std::vector<Studentas>& studentasList, const std::string&
     }
 
     out << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(15) << "Galutinis(Vid.)" << endl;
-    for (const auto& studentas : sortedStudents) {
+    for (const auto& studentas : studentasList) {
         out << setw(20) << studentas.getVardas() << setw(20) << studentas.getPavarde()
             << setw(15) << fixed << setprecision(2) << studentas.getVidurkis() << endl;
     }
@@ -356,13 +356,18 @@ vector<Studentas> skaitytiStudentusV(int n) {
     vector<int> pazymiaiV(9);
 
     while (in >> vardas >> pavarde) {
+        vector<int> pazymiaiV(9);
         for (int& pazymys : pazymiaiV) {
             in >> pazymys;
         }
+        double egzaminas;
         in >> egzaminas;
 
         Studentas studentas(vardas, pavarde, pazymiaiV, egzaminas);
-        studentai.emplace_back(move(studentas));
+        studentas.calculateVidurkis();
+        studentas.calculateMediana();
+
+        studentai.emplace_back(studentas);        // studentai.emplace_back(move(studentas));
     }
 
     auto finishs = chrono::high_resolution_clock::now();

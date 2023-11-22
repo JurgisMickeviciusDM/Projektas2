@@ -55,7 +55,7 @@ int main() {
             }
 
             for (int n : studentuSkaiciai) {
-                std::vector<Studentas> studentai = skaitytiStudentusV(n);
+                studentai = skaitytiStudentusV(n);
                 std::vector<Studentas> vargsiukai;
                 std::vector<Studentas> kietiakiai;
                 vargsiukai.reserve(n);
